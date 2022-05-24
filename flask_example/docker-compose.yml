@@ -1,0 +1,24 @@
+version: '3.9'
+ 
+services:
+  python-flask-exam-pivot-table:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    ports:
+      - 5000:5000
+    env_file:
+      - backend.env
+    command: python3 app.py
+    
+  ngrok:
+    image: wernight/ngrok:latest
+    ports:
+      - "8888:4040"
+    depends_on:
+      - python-flask-exam-pivot-table
+    environment:
+      NGROK_PROTOCOL: tcp
+      NGROK_PORT: python-flask-exam-pivot-table:5000
+      NGROK_AUTH: 26MVP38dFI9iAt0GpMcXeFPjiOK_5ugK3Tcu2a4GobK9H1tRF
+
